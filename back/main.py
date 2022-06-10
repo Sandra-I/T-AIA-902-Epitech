@@ -17,7 +17,6 @@ class Params(BaseModel):
 def read_root():
     return {"Hello AI World"}
 
-
 @app.post("/endpoint")
 def endpoint(params : Params):
     return params
