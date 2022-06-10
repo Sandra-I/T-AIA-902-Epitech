@@ -1,0 +1,28 @@
+.loading {
+    margin: auto;
+    width: 500px;
+    height: 500px;
+    position: relative;
+    &::before {
+        position: absolute;
+        animation: rotate infinite 1.5s cubic-bezier(.15,1.2,.88,1.02);
+        content: " ";
+        width: 150px;
+        height: 150px;
+        left: calc(50% - 75px);
+        top: calc(50% - 75px);
+        border: 5px solid #6caba6;
+        border-color: #6caba6 transparent #6caba6 transparent;
+        border-radius: 50%;
+    }   
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg)
+    }
+    
+    100% {
+        transform: rotate(720deg);
+    }
+}
