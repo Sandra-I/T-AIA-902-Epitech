@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  ai-front:
+    build: ./
+    environment:
+      - VIRTUAL_HOST=ai.front.fmo-dev.com
+      - VIRTUAL_PORT=3000
+    networks:
+      - proxy
+    
+networks:
+   proxy:
+      external:
+         name: reverse-proxy_proxy
