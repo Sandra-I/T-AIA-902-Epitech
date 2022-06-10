@@ -1,19 +1,19 @@
 from typing import Union
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
+from pydantic import BaseModel
 
 app = FastAPI()
 
-# nb_episodes = 10000
-# max_steps_per_episode = 100
-
-# learning_rate = 0.81
-# discount_rate = 0.96
-
-# exploration_rate = 1
-# max_exploration_rate = 1
-# min_exploration_rate = 0.01
-# exploration_decay_rate = 0.01
+class Params(BaseModel):
+    nb_episodes: int
+    max_steps_per_episode: int
+    learning_rate: float
+    discount_rate: float
+    exploration_rate: int
+    max_exploration_rate: int
+    min_exploration_rate: float
+    exploration_decay_rate: float
 
 @app.get("/")
 def read_root():
@@ -21,6 +21,5 @@ def read_root():
 
 
 @app.post("/endpoint")
-async def read_item(params: Request):
-    req_params = await params.json()
-    return req_params
+def read_item(params : Params):
+    return params
