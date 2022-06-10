@@ -1,6 +1,6 @@
 from typing import Union
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 
 app = FastAPI()
 
@@ -20,7 +20,7 @@ def read_root():
     return {"Hello AI World"}
 
 
-@app.get("/endpoint")
-def read_item():
-    # params en body
-    return {"item_id"}
+@app.post("/endpoint")
+async def read_item(params: Request):
+    req_params = await params.json()
+    return req_params
