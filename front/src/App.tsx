@@ -9,18 +9,17 @@ function App() {
   const [chartData, setChartData] = useState<number[]>()
   const [loading, setLoading] = useState(false)
   return (
-    <AppLoading />
-    // <div className="App">
-    //   <h1 style={{ fontSize: 35, marginTop: 0, marginBottom: 30, display: 'flex' }}>
-    //   <img style={{height: 50, marginRight: 5}} src='taxi.png' />
-    //     T-AIA-902 Taxi Driver
-    //     <img style={{height: 50, marginLeft: 5}} src='taxi.png' /></h1>
-    //   <div style={{ display: !loading && !chartData ? "block" : "none" }}>
-    //     <AppForm setChartData={setChartData} setLoading={setLoading} />
-    //   </div>
-    //   {loading && <AppLoading />}
-    //   {chartData && !loading && <AppChart chartData={chartData} setChartData={setChartData} />}
-    // </div>
+    <div className="App">
+      <h1 style={{ fontSize: 35, marginTop: 0, marginBottom: 30, display: 'flex' }}>
+      <img style={{height: 50, marginRight: 5}} src='taxi.png' />
+        T-AIA-902 Taxi Driver
+        <img style={{height: 50, marginLeft: 5}} src='taxi.png' /></h1>
+      <div style={{ display: !loading && !chartData ? "block" : "none" }}>
+        <AppForm setChartData={setChartData} setLoading={setLoading} />
+      </div>
+      {loading && <AppLoading />}
+      {chartData && !loading && <AppChart chartData={chartData} setChartData={setChartData} />}
+    </div>
   );
 }
 
