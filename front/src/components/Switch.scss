@@ -1,0 +1,36 @@
+.switch_container {
+    width: 45px;
+    .switch_label {
+        position: relative;
+        .switch_visual {
+            background-color: rgb(226, 226, 226);
+            height: 20px;
+            width: 100%;
+            border-radius: 50px;
+            position: relative;
+            &:before {
+                transition: all .2s;
+                content: "";
+                height: 20px;
+                width: 20px;
+                border-radius: 50%;
+                background-color: rgb(112, 112, 112);
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+        }
+        
+        &.on .switch_visual:before {
+            left: 25px;
+        }
+        input {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        }
+    }
+}
