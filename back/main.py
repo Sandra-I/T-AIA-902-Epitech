@@ -21,5 +21,5 @@ def read_root():
 
 
 @app.post("/endpoint")
-def read_item(params : Params):
+def endpoint(params : Params):
     return params
