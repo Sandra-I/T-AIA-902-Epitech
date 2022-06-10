@@ -1,2 +1,3 @@
 .ipynb_checkpoints
-aia902_venv
+venv-ia902
+__pycache__
