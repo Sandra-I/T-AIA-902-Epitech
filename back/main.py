@@ -3,6 +3,17 @@ from pydantic import BaseModel
 import numpy as np
 import gym
 import random
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 def run_algorithm(params):
@@ -56,8 +67,6 @@ def run_algorithm(params):
 
     return average_rewards
 
-
-app = FastAPI()
 
 class Params(BaseModel):
     nb_episodes: int

@@ -1,0 +1,23 @@
+#chart_view {
+    & #chart_head {
+       display: flex;
+       position: relative;
+       justify-content: center;
+       & button {
+           position: absolute;
+           left: 0
+       }
+       & h1 {
+       }
+    }
+    #chart_container {
+        margin-top: 40px;
+        height: 400px;
+        display: flex;
+        justify-content: center;
+        & canvas {
+            margin: auto;
+            width: 600px;
+        }
+    }
+}
