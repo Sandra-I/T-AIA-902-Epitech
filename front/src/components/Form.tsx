@@ -6,8 +6,9 @@ import "./Form.scss"
 import AppSwitch from './Switch';
 import AppButton from './AppButton';
 import './Button.scss'
+import axios from 'axios';
 
-const url = "";
+const url = "http://ai.api.fmo-dev.com/endpoint";
 
 type FormType = {
     nb_episodes: number;
@@ -75,9 +76,9 @@ const AppForm: React.FC<{
         }).catch(() => setSubmitting(false))
     }
 
-    // const send = (values: FormType) => axios.post(url, values);
+    const send = (values: FormType) => axios.post(url, values);
 
-    const send = (values: any) => Promise.resolve({data: [-45.875999999999806, 7.417999999999967, 7.436999999999962, 7.495999999999964, 7.473999999999956, 7.439999999999961, 7.418999999999969, 7.576999999999961, 7.48499999999996, 7.468999999999962]})
+    // const send = (values: any) => Promise.resolve({data: [-45.875999999999806, 7.417999999999967, 7.436999999999962, 7.495999999999964, 7.473999999999956, 7.439999999999961, 7.418999999999969, 7.576999999999961, 7.48499999999996, 7.468999999999962]})
     const transformValues = (values: FormType): FormType => {
         const newValues: Partial<FormType> = {};
         for (const key in values) {
