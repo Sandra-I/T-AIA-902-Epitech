@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import "./Form.scss"
 import { send } from 'process';
 import axios from 'axios';
+import AppSwitch from './Switch';
 
 const url = "";
 
@@ -32,7 +33,8 @@ const inputs: { min: number, max: number, divideBy?: number, key: keyof FormType
     { min: 0, max: 100, divideBy: 100, label: "Exploration decay rate", key: "exploration_decay_rate" },
 ]
 
-const AppForm: React.FC<{ custom: boolean }> = ({ custom }): ReactElement => {
+const AppForm: React.FC = (): ReactElement => {
+    const [custom, setCustom] = useState(false)
 
     const formDefault = {
         nb_episodes: 10000,
@@ -43,7 +45,6 @@ const AppForm: React.FC<{ custom: boolean }> = ({ custom }): ReactElement => {
         max_exploration_rate: 1,
         min_exploration_rate: 0.01 * 100,
         exploration_decay_rate: 0.01 * 100
-        
     };
 
 
@@ -58,9 +59,12 @@ const AppForm: React.FC<{ custom: boolean }> = ({ custom }): ReactElement => {
         exploration_decay_rate: yup.number().required("Ce champ est requis")
     });
 
+    const changeCustomValue = (value: boolean, resetForm: Function): void => {
+        setCustom(value);
+        resetForm();
+    }
+
     const onSubmit = (values: FormType, { setSubmitting }: FormikHelpers<FormType>) => {
-        console.log(values);
-        
         send(transformValues(custom ? values : formDefault)).then(res => {
             console.log(res);
             setSubmitting(false);
@@ -78,29 +82,30 @@ const AppForm: React.FC<{ custom: boolean }> = ({ custom }): ReactElement => {
         return newValues as FormType
     }
 
-
     return (
         <div className="form_container">
             <Formik initialValues={formDefault} onSubmit={onSubmit} validationSchema={validationSchema}>
-                {({ handleChange, values, handleSubmit, isSubmitting, isValid, setFieldValue }) => (
-                    <div id="form_content">
-                        <Form style={{ opacity: custom ? 1 : 0 }}>
-                            {inputs.map(input => (
-                                <AppNumberSlider
-                                    key={input.key}
-                                    min={input.min}
-                                    max={input.max}
-                                    divideBy={input.divideBy}
-                                    formKey={input.key}
-                                    handleChange={handleChange}
-                                    setFieldValue={setFieldValue}
-                                    value={values[input.key]}  >
-                                    {input.label}
-                                </AppNumberSlider>
-                            ))}
-                        </Form>
-                        <button onClick={() => handleSubmit()} disabled={(custom && !isValid) || isSubmitting}>Submit</button>
-                    </div>
+                {({ handleChange, values, handleSubmit, isSubmitting, isValid, setFieldValue, resetForm }) => (
+                    <><AppSwitch setCustom={(value: boolean) => changeCustomValue(value, resetForm)} />
+                        <div id="form_content">
+                            <Form style={{ opacity: custom ? 1 : 0.7, pointerEvents: custom ? "all" : "none" }}>
+                                {inputs.map(input => (
+                                    <AppNumberSlider
+                                        key={input.key}
+                                        min={input.min}
+                                        max={input.max}
+                                        divideBy={input.divideBy}
+                                        formKey={input.key}
+                                        handleChange={handleChange}
+                                        setFieldValue={setFieldValue}
+                                        value={values[input.key]}  >
+                                        {input.label}
+                                    </AppNumberSlider>
+                                ))}
+                            </Form>
+                            <button onClick={() => handleSubmit()} disabled={(custom && !isValid) || isSubmitting}>Submit</button>
+                        </div>
+                    </>
                 )}
             </Formik>
         </div>

@@ -1,7 +1,7 @@
 import { ReactElement, useEffect, useState } from 'react'
 import './Switch.scss';
 
-const AppSwitch: React.FC<{ setCustom: React.Dispatch<React.SetStateAction<boolean>> }> = ({ setCustom }): ReactElement => {
+const AppSwitch: React.FC<{ setCustom(value: boolean): void }> = ({ setCustom }): ReactElement => {
     const [on, setOn] = useState(false);
 
     useEffect(() => setCustom(on), [on])
@@ -11,7 +11,7 @@ const AppSwitch: React.FC<{ setCustom: React.Dispatch<React.SetStateAction<boole
     }
 
     return (
-        <div style={{ display: "flex", width: 250, justifyContent: 'space-between'}}>
+        <div style={{ display: "flex", width: 250, justifyContent: 'space-between', margin: 'auto'}}>
             OPTIMIZED
             <div className="switch_container">
                 <label htmlFor="switch" className={"switch_label " + (on ? "on" : "")} >

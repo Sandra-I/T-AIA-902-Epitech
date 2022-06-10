@@ -4,12 +4,10 @@ import AppForm from './components/Form';
 import AppSwitch from './components/Switch';
 
 function App() {
-  const [custom, setCustom] = useState(false)
 
   return (
     <div className="App">
-      <AppSwitch setCustom={setCustom} />
-      <AppForm custom={custom} />
+      <AppForm  />
     </div>
   );
 }
