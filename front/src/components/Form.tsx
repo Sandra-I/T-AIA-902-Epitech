@@ -1,11 +1,11 @@
 import { ReactElement, useState } from 'react'
 import AppNumberSlider from './NumberSlider';
-import { Formik, Field, Form, FormikHelpers } from 'formik';
+import { Formik, Form, FormikHelpers } from 'formik';
 import * as yup from 'yup';
 import "./Form.scss"
-import { send } from 'process';
-import axios from 'axios';
 import AppSwitch from './Switch';
+import AppButton from './AppButton';
+import './Button.scss'
 
 const url = "";
 
@@ -33,7 +33,10 @@ const inputs: { min: number, max: number, divideBy?: number, key: keyof FormType
     { min: 0, max: 100, divideBy: 100, label: "Exploration decay rate", key: "exploration_decay_rate" },
 ]
 
-const AppForm: React.FC = (): ReactElement => {
+const AppForm: React.FC<{
+    setChartData(value: number[]): void,
+    setLoading(value: boolean): void
+}> = ({ setChartData, setLoading }): ReactElement => {
     const [custom, setCustom] = useState(false)
 
     const formDefault = {
@@ -46,7 +49,6 @@ const AppForm: React.FC = (): ReactElement => {
         min_exploration_rate: 0.01 * 100,
         exploration_decay_rate: 0.01 * 100
     };
-
 
     const validationSchema = yup.object({
         nb_episodes: yup.number().required("Ce champ est requis"),
@@ -65,14 +67,17 @@ const AppForm: React.FC = (): ReactElement => {
     }
 
     const onSubmit = (values: FormType, { setSubmitting }: FormikHelpers<FormType>) => {
+        setLoading(true);
         send(transformValues(custom ? values : formDefault)).then(res => {
-            console.log(res);
+            setChartData(res.data)
+            setLoading(false);
             setSubmitting(false);
         }).catch(() => setSubmitting(false))
     }
 
-    const send = (values: FormType) => axios.post(url, values);
+    // const send = (values: FormType) => axios.post(url, values);
 
+    const send = (values: any) => Promise.resolve({data: [-45.875999999999806, 7.417999999999967, 7.436999999999962, 7.495999999999964, 7.473999999999956, 7.439999999999961, 7.418999999999969, 7.576999999999961, 7.48499999999996, 7.468999999999962]})
     const transformValues = (values: FormType): FormType => {
         const newValues: Partial<FormType> = {};
         for (const key in values) {
@@ -103,7 +108,7 @@ const AppForm: React.FC = (): ReactElement => {
                                     </AppNumberSlider>
                                 ))}
                             </Form>
-                            <button onClick={() => handleSubmit()} disabled={(custom && !isValid) || isSubmitting}>Submit</button>
+                            <AppButton onClick={() => handleSubmit()} disabled={(custom && !isValid) || isSubmitting} label="Submit"/>
                         </div>
                     </>
                 )}
