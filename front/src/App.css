@@ -9,4 +9,5 @@
 
 * {
   transition: all .2s;
+  user-select: none;
 }

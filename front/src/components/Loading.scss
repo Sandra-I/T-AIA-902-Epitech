@@ -5,7 +5,7 @@
     position: relative;
     &::before {
         position: absolute;
-        animation: rotate infinite 1.5s cubic-bezier(.15,1.2,.88,1.02);
+        animation: rotate infinite 1.5s cubic-bezier(0.15, 1.2, 0.88, 1.02);
         content: " ";
         width: 150px;
         height: 150px;
@@ -14,15 +14,69 @@
         border: 5px solid #6caba6;
         border-color: #6caba6 transparent #6caba6 transparent;
         border-radius: 50%;
-    }   
+    }
+}
+
+.car_loading {
+    position: relative;
+    overflow: hidden;
+    width: 500px;
+    margin: 200px auto;
+    & img {
+        animation: car linear infinite 1s
+    }
+    &::before {
+        position: absolute;
+        content: " ";
+        height: 40px;
+        background-color: black;
+        width: 2000px;
+        bottom: 0;
+        animation: road infinite linear 2s;
+        background-image: linear-gradient(to right, white 80%, rgba(255, 255, 255, 0) 0%);
+        background-position: 5%;
+        background-size: 100px 10px;
+        background-repeat: repeat-x;
+    }
 }
 
 @keyframes rotate {
     0% {
-        transform: rotate(0deg)
+        transform: rotate(0deg);
     }
-    
+
     100% {
         transform: rotate(720deg);
+    }
+}
+
+@keyframes road {
+    0% {
+        left: 0;
+    }
+
+    100% {
+        left: -1000px;
+    }
+}
+@keyframes car {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(5deg)
+    }
+
+    50% {
+        transform: rotate(0deg);
+    }
+
+    75% {
+        transform: rotate(-5deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
     }
 }

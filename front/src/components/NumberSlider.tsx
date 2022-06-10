@@ -14,7 +14,9 @@ const AppNumberSlider: React.FC<{
 }> = ({ min, max, divideBy = 1, formKey, children, handleChange, value, setFieldValue }): ReactElement => {
 
     const changeValue = (amount: -1 | 1): void => {
-        setFieldValue(formKey, value + amount);
+        if (value + amount >= min && value + amount <= max) {
+            setFieldValue(formKey, value + amount);
+        }
     }
 
     return (
@@ -23,7 +25,7 @@ const AppNumberSlider: React.FC<{
             <div className="range_container">
                 <button type="button" onClick={() => changeValue(-1)}><p>-</p></button>
                 <Field type="range" id={formKey} min={min} max={max} className="slider" onChange={handleChange} value={value} />
-                <button type="button" onClick={() => changeValue(1)}><p style={{marginTop: 2}}>+</p></button>
+                <button type="button" onClick={() => changeValue(1)}><p style={{ marginTop: 2 }}>+</p></button>
             </div>
         </div>
     );
