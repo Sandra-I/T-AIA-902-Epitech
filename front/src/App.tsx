@@ -6,7 +6,7 @@ import AppForm from './components/Form';
 import AppLoading from './components/Loading';
 
 function App() {
-  const [chartData, setChartData] = useState<number[]>()
+  const [chartData, setChartData] = useState<[number[], number]>()
   const [loading, setLoading] = useState(false)
   return (
     <div className="App">
