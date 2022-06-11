@@ -66,7 +66,7 @@ const AppChart: React.FC<{
         <div id="chart_view">
             <div id="chart_head">
                 <button className="back_button" onClick={() => setChartData(undefined)}>Retour</button>
-                <h1 style={{ marginTop: 100 }}>Average reward every 1000 episodes</h1>
+                <h1 style={{marginTop: 100 }}>Average reward every 1000 episodes</h1>
             </div>
             <div id="chart_container">
                 <canvas id="chart" width="600" height="400"></canvas>
