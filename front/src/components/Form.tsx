@@ -8,8 +8,8 @@ import AppButton from './AppButton';
 import './Button.scss'
 import axios from 'axios';
 
-// const url = "http://ai.api.fmo-dev.com/endpoint";
-const url = "http://localhost:8000/endpoint"
+const url = "http://ai.api.fmo-dev.com/endpoint";
+// const url = "http://localhost:8000/endpoint"
 
 type FormType = {
     nb_episodes: number;
