@@ -57,14 +57,15 @@ def run_algorithm(params):
             (max_exploration_rate - min_exploration_rate) * \
             np.exp(-exploration_decay_rate*episode)
         rewards_all_episodes.append(rewards_current_episode)
-
+    cut_nb_episodes = nb_episodes - nb_episodes % 1000
+    rewards_per_thousand_episodes = rewards_all_episodes[0:cut_nb_episodes]
     rewards_per_thousand_episodes = np.split(
-        np.array(rewards_all_episodes), nb_episodes/1000)
-
-    average_rewards = []
+        np.array(rewards_per_thousand_episodes), cut_nb_episodes/1000)
+    average_rewards = [rewards_all_episodes[0]]
     for r in rewards_per_thousand_episodes:
         average_rewards.append(sum(r/1000))
-
+    if(cut_nb_episodes != nb_episodes):
+      average_rewards.append(sum(np.array(rewards_all_episodes[cut_nb_episodes:nb_episodes])/1000))
     return average_rewards
 
 
@@ -78,9 +79,11 @@ class Params(BaseModel):
     min_exploration_rate: float
     exploration_decay_rate: float
 
+
 @app.get("/")
 def read_root():
     return {"Hello AI World"}
+
 
 @app.post("/endpoint")
 def endpoint(params: Params):

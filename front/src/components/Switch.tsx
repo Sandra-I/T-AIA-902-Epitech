@@ -12,14 +12,14 @@ const AppSwitch: React.FC<{ setCustom(value: boolean): void }> = ({ setCustom })
 
     return (
         <div style={{ display: "flex", width: 250, justifyContent: 'space-between', margin: 'auto'}}>
-            OPTIMIZED
+            <span style={{cursor: "pointer"}} onClick={() => setOn(false)}>OPTIMIZED</span>
             <div className="switch_container">
                 <label htmlFor="switch" className={"switch_label " + (on ? "on" : "")} >
                     <div className="switch_visual" />
-                    <input id="switch" type="checkbox" onClick={(e) => onInputClick(e.target as HTMLInputElement)} />
+                    <input id="switch" checked={on} type="checkbox" onChange={(e) => onInputClick(e.target as HTMLInputElement)} />
                 </label>
             </div>
-            CUSTOM
+            <span style={{cursor: "pointer"}} onClick={() => setOn(true)}>CUSTOM</span>
         </div>
     );
 }

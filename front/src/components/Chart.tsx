@@ -5,8 +5,8 @@ import './Chart.scss';
 let iteration = 0;
 
 const AppChart: React.FC<{
-    chartData: number[],
-    setChartData(value: number[] | undefined): void
+    chartData: [number[], number],
+    setChartData(value: [number[], number] | undefined): void
 }> = ({ chartData, setChartData }): ReactElement => {
     const [chart, setChart] = useState<Chart>();
 
@@ -18,12 +18,17 @@ const AppChart: React.FC<{
                 type: "line",
                 data: {
                     datasets: [{
-                        data: chartData.map((value) => parseFloat(value.toFixed(2))),
+                        data: chartData[0].map((value) => parseFloat(value.toFixed(2))),
                         borderColor: "blue",
                         backgroundColor: "none",
                         borderWidth: 2,
                     }],
-                    labels: chartData.map((_, i) => 1000 * i)
+                    labels: chartData[0].map((_, i) => {
+                        if (chartData[1] && chartData[1] % 1000 && (chartData[1] - chartData[1] % 1000) / 1000 < i) {
+                            return chartData[1]
+                        }
+                        else return 1000 * i
+                    })
                 },
                 options: {
                     plugins: {
@@ -33,7 +38,7 @@ const AppChart: React.FC<{
                     },
                     elements: {
                         point: {
-                            radius: 0
+                            radius: 3
                         }
                     },
                     scales: {

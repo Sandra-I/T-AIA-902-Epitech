@@ -9,6 +9,7 @@ import './Button.scss'
 import axios from 'axios';
 
 const url = "http://ai.api.fmo-dev.com/endpoint";
+// const url = "http://localhost:8000/endpoint"
 
 type FormType = {
     nb_episodes: number;
@@ -24,7 +25,7 @@ type FormType = {
 
 
 const inputs: { min: number, max: number, divideBy?: number, key: keyof FormType, label: string }[] = [
-    { min: 0, max: 100000, key: "nb_episodes", label: "Number of Episodes" },
+    { min: 1000, max: 20000  , key: "nb_episodes", label: "Number of Episodes" },
     { min: 0, max: 200, label: "Max steps per episodes", key: "max_steps_per_episode" },
     { min: 0, max: 100, divideBy: 100, label: "Learning rate", key: "learning_rate" },
     { min: 0, max: 200, divideBy: 100, label: "Discount rate", key: "discount_rate" },
@@ -35,13 +36,13 @@ const inputs: { min: number, max: number, divideBy?: number, key: keyof FormType
 ]
 
 const AppForm: React.FC<{
-    setChartData(value: number[]): void,
+    setChartData(value: [number[], number]): void,
     setLoading(value: boolean): void
 }> = ({ setChartData, setLoading }): ReactElement => {
     const [custom, setCustom] = useState(false)
 
     const formDefault = {
-        nb_episodes: 10000,
+        nb_episodes: 10000  ,
         max_steps_per_episode: 100,
         learning_rate: 0.81 * 100,
         discount_rate: 0.96 * 100,
@@ -70,7 +71,7 @@ const AppForm: React.FC<{
     const onSubmit = (values: FormType, { setSubmitting }: FormikHelpers<FormType>) => {
         setLoading(true);
         send(transformValues(custom ? values : formDefault)).then(res => {
-            setChartData(res.data)
+            setChartData([res.data, values.nb_episodes])
             setLoading(false);
             setSubmitting(false);
         }).catch(() => setSubmitting(false))
@@ -78,7 +79,6 @@ const AppForm: React.FC<{
 
     const send = (values: FormType) => axios.post(url, values);
 
-    // const send = (values: any) => Promise.resolve({data: [-45.875999999999806, 7.417999999999967, 7.436999999999962, 7.495999999999964, 7.473999999999956, 7.439999999999961, 7.418999999999969, 7.576999999999961, 7.48499999999996, 7.468999999999962]})
     const transformValues = (values: FormType): FormType => {
         const newValues: Partial<FormType> = {};
         for (const key in values) {
