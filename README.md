@@ -8,7 +8,7 @@ To launch the project please follow the next instructions:
 `npm i`  
 `npm run start`
 
-The front is deployed to the url http://ai.front.fmo-dev.com
+The front is deployed to the url http://ai.fmo-dev.com
 
 
 ### BACK
