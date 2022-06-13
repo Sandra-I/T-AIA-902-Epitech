@@ -5,7 +5,7 @@ services:
     build: ./
     environment:
       - VIRTUAL_HOST=ai.front.fmo-dev.com
-      - VIRTUAL_PORT=3000
+      - VIRTUAL_PORT=3006
     networks:
       - proxy
     
